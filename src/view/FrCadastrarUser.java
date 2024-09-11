@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import model.User;
+import utils.Utils;
 
 /**
  *
@@ -180,34 +182,34 @@ public class FrCadastrarUser extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataNascActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        String nome = txtNome.getText();
-        String email = txtEmail.getText();
-        String senha = txtSenha.getText();
-        String dataNasc = txtDataNasc.getText();
-        SimpleDateFormat formatoEntrada = new SimpleDateFormat("dd/MM/yyyy"); // Formato da string original
-        SimpleDateFormat formatoSaida = new SimpleDateFormat("yyyy-MM-dd"); // Formato de saída desejado (MySQL)
-        String dataFormatada = "";
-        
-        try {
-            Date data = formatoEntrada.parse(dataNasc);
-            dataFormatada = formatoSaida.format(data);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        boolean ativo = checkAtivo.isSelected();
-
         if (verificaCampos()) {
-            UserController controller = new UserController();
-            boolean cadastrado = controller.cadastrar(nome, email, senha, dataFormatada, ativo);
-
-            if (cadastrado) {
-                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-                this.dispose();
-            }
+            gravar();
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    public void gravar() {
+            User user = new User();
+            user.setNome(txtNome.getText());
+            user.setEmail(txtEmail.getText());
+            user.setSenha(txtSenha.getText());
+            Date datanasc = Utils.converterStringToDate(txtDataNasc.getText());
+            user.setDataNasc(datanasc);
+            user.setAtivo(checkAtivo.isSelected());
+            
+            UserController controller = new UserController();
+            boolean confirm = controller.cadastrar(user);
+            
+            if (confirm) {
+                JOptionPane.showMessageDialog(null, "Usuário " + user.getNome() + " cadastrado com sucesso!");
+                this.dispose();
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir usuário.");
+                
+            }
+            
+        
+    }
 
     public boolean verificaCampos() {
         if (txtNome.getText().equals("")) {
