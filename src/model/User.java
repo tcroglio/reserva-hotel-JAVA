@@ -15,6 +15,11 @@ public class User {
     private boolean ativo;
 
     public User() {}
+
+    @Override
+    public String toString() {
+        return "User{" + "id_usuario=" + id_usuario + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", dataNasc=" + dataNasc + ", ativo=" + ativo + '}';
+    }
     
     public User(int id_usuario, String nome, String email, String senha, Date dataNasc, boolean ativo) {
         this.id_usuario = id_usuario;

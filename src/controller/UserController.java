@@ -3,7 +3,8 @@ package controller;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import model.User;
 
@@ -14,6 +15,7 @@ public class UserController {
 
     public UserController() {
     }
+    //--------------------------------------------------------------------------------------//
 
     //--------------------------------------------------------------------------------------//
     public boolean autenticar(String email, String senha) {
@@ -47,6 +49,10 @@ public class UserController {
 
         return false;
     }
+    
+    //--------------------------------------------------------------------------------------//
+
+    //--------------------------------------------------------------------------------------//
 
     public boolean cadastrar(User usuario) {
 
@@ -79,4 +85,48 @@ public class UserController {
 
         return false;
     }
+    
+    //--------------------------------------------------------------------------------------//
+
+    //--------------------------------------------------------------------------------------//
+
+    public List listaUsuarios() {
+        
+        List<User> userlist = new ArrayList<>();
+        
+        String sql = "SELECT * FROM tbl_usuarios";
+
+        DbConnection gerenciador = new DbConnection();
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        try {
+            comando = gerenciador.prepararComando(sql);
+
+            resultado = comando.executeQuery();
+            
+            while (resultado.next()) {
+                User usu = new User();
+                usu.setId_usuario(resultado.getInt("id_usuario"));
+                usu.setNome(resultado.getString("nome"));
+                usu.setEmail(resultado.getString("email"));
+                usu.setSenha(resultado.getString("senha"));
+                usu.setDataNasc(resultado.getDate("datanasc"));
+                usu.setAtivo(resultado.getBoolean("ativo"));
+                
+                userlist.add(usu);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        } finally {
+            gerenciador.fecharConexao(comando, resultado);
+
+        }
+        return userlist;
+    }
+
+    //--------------------------------------------------------------------------------------//
+
 }

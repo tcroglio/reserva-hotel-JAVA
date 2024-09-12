@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-import controller.DbConnection;
 import controller.UserController;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -49,7 +44,7 @@ public class FrAutenticacao extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Fazer Login"));
 
-        jLabel1.setText("USUÁRIO");
+        jLabel1.setText("EMAIL");
 
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -128,12 +123,12 @@ public class FrAutenticacao extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(38, 38, 38)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
+                        .addGap(102, 102, 102)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,13 +195,11 @@ public class FrAutenticacao extends javax.swing.JFrame {
                 
         UserController controller = new UserController();
                 
-        if (!email.equals("") || !senha.equals("")) {
+        if (!email.equals("") && !senha.equals("")) {
             
             boolean autenticado = controller.autenticar(email, senha);
             
-            if (autenticado) {
-                JOptionPane.showMessageDialog(null, "Logado com sucesso!");
-                
+            if (autenticado) {                
                 FrMenu menuSistema = new FrMenu();
                 this.dispose();
                 menuSistema.setVisible(true);
