@@ -49,11 +49,9 @@ public class UserController {
 
         return false;
     }
-    
-    //--------------------------------------------------------------------------------------//
 
     //--------------------------------------------------------------------------------------//
-
+    //--------------------------------------------------------------------------------------//
     public boolean cadastrar(User usuario) {
 
         String sql = "INSERT INTO tbl_usuarios (nome, email, senha, datanasc, ativo)"
@@ -69,9 +67,9 @@ public class UserController {
             comando.setString(3, usuario.getSenha());
             comando.setDate(4, new java.sql.Date(usuario.getDataNasc().getTime()));
             comando.setBoolean(5, usuario.isAtivo());
-            
+
             int linhasAfetadas = comando.executeUpdate();
-            
+
             if (linhasAfetadas > 0) {
                 return true;
             }
@@ -85,26 +83,90 @@ public class UserController {
 
         return false;
     }
-    
-    //--------------------------------------------------------------------------------------//
 
     //--------------------------------------------------------------------------------------//
-
-    public List listaUsuarios() {
-        
-        List<User> userlist = new ArrayList<>();
-        
+    //--------------------------------------------------------------------------------------//
+    public List<User> listaUsuarios(int tipoFiltro, String filtro, int orderBy) {
         String sql = "SELECT * FROM tbl_usuarios";
 
+        List<User> userlist = new ArrayList<>();
         DbConnection gerenciador = new DbConnection();
         PreparedStatement comando = null;
         ResultSet resultado = null;
 
-        try {
-            comando = gerenciador.prepararComando(sql);
+        // BUSCA
+        if (!filtro.equals("")) {
 
+            if (tipoFiltro == 0 || tipoFiltro == 1) { // BUSCA PELO NOME
+                sql += " WHERE nome LIKE ? ";
+
+            } else { // BUSCA PELO EMAIL
+                sql += " WHERE email LIKE ? ";
+
+            }
+
+        }
+
+        // ORDENA
+        if (orderBy != 0) {
+
+            switch (orderBy) {
+                case 1: // ORDENA PELO CÓDIGO EM ASCENDENTE
+                    sql += " ORDER BY id_usuario ";
+                    break;
+
+                case 2: // ORDENA PELO CÓDIGO EM DESCENDENTE
+                    sql += " ORDER BY id_usuario DESC ";
+                    break;
+
+                case 3: // ORDENA PELO NOME EM ASCENDENTE
+                    sql += " ORDER BY nome ";
+                    break;
+
+                case 4: // ORDENA PELO NOME EM DESCENDENTE
+                    sql += " ORDER BY nome DESC ";
+                    break;
+                    
+                case 5: // ORDENA PELO EMAIL EM ASCENDENTE
+                    sql += " ORDER BY email ";
+                    break;
+                    
+                case 6: // ORDENA PELO EM DESCENDENTE
+                    sql += " ORDER BY email DESC ";
+                    break;
+            }
+        }
+
+        try {
+            comando = gerenciador.prepararComando(sql); // prepara o comando
+
+            // SETA A STRING CASO O USUÁRIO TENHA INSERIDO ALGO NA BUSCA
+            if (!filtro.equals("")) {
+                if (!filtro.equals("")) {
+
+                    switch (tipoFiltro) {
+                        case 0: // BUSCA PELO PRIMEIRO NOME
+                            comando.setString(1, filtro + "%");
+                            break;
+
+                        case 1: // BUSCA PELO NOME INTEIRO
+                            comando.setString(1, "%" + filtro + "%");
+                            break;
+
+                        case 2: // BUSCA PELO INÍCIO DO EMAIL
+                            comando.setString(1, filtro + "%");
+                            break;
+
+                        case 3: // BUSCA PELO EMAIL INTEIRO
+                            comando.setString(1, "%" + filtro + "%");
+                            break;
+                    }
+                }
+            }
+
+            // executa a query construída
             resultado = comando.executeQuery();
-            
+
             while (resultado.next()) {
                 User usu = new User();
                 usu.setId_usuario(resultado.getInt("id_usuario"));
@@ -113,7 +175,7 @@ public class UserController {
                 usu.setSenha(resultado.getString("senha"));
                 usu.setDataNasc(resultado.getDate("datanasc"));
                 usu.setAtivo(resultado.getBoolean("ativo"));
-                
+
                 userlist.add(usu);
             }
 
@@ -128,5 +190,4 @@ public class UserController {
     }
 
     //--------------------------------------------------------------------------------------//
-
 }
