@@ -192,7 +192,9 @@ public class FrCadastrarUser extends javax.swing.JFrame {
         User user = new User();
         user.setNome(txtNome.getText());
         user.setEmail(txtEmail.getText());
-        user.setSenha(txtSenha.getText());
+        String senha = txtSenha.getText();
+        String senhaHash = Utils.calcularSHA1(senha);
+        user.setSenha(senhaHash);
         Date datanasc = Utils.converterStringToDate(txtDataNasc.getText());
         user.setDataNasc(datanasc);
         user.setAtivo(checkAtivo.isSelected());

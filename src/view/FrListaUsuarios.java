@@ -67,7 +67,7 @@ public class FrListaUsuarios extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Largura", "Altura", "Email", "Data de nascimento", "Ativo"
+                "Código", "Nome", "Email", "Data de nascimento", "Ativo"
             }
         ) {
             Class[] types = new Class [] {

@@ -3,6 +3,7 @@ package view;
 import controller.UserController;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import utils.Utils;
 
 /**
  *
@@ -197,7 +198,9 @@ public class FrAutenticacao extends javax.swing.JFrame {
                 
         if (!email.equals("") && !senha.equals("")) {
             
-            boolean autenticado = controller.autenticar(email, senha);
+            String senhaHash = Utils.calcularSHA1(senha);
+            
+            boolean autenticado = controller.autenticar(email, senhaHash);
             
             if (autenticado) {                
                 FrMenu menuSistema = new FrMenu();

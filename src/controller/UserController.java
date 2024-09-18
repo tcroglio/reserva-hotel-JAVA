@@ -126,11 +126,11 @@ public class UserController {
                 case 4: // ORDENA PELO NOME EM DESCENDENTE
                     sql += " ORDER BY nome DESC ";
                     break;
-                    
+
                 case 5: // ORDENA PELO EMAIL EM ASCENDENTE
                     sql += " ORDER BY email ";
                     break;
-                    
+
                 case 6: // ORDENA PELO EM DESCENDENTE
                     sql += " ORDER BY email DESC ";
                     break;
@@ -142,25 +142,23 @@ public class UserController {
 
             // SETA A STRING CASO O USUÁRIO TENHA INSERIDO ALGO NA BUSCA
             if (!filtro.equals("")) {
-                if (!filtro.equals("")) {
 
-                    switch (tipoFiltro) {
-                        case 0: // BUSCA PELO PRIMEIRO NOME
-                            comando.setString(1, filtro + "%");
-                            break;
+                switch (tipoFiltro) {
+                    case 0: // BUSCA PELO PRIMEIRO NOME
+                        comando.setString(1, filtro + "%");
+                        break;
 
-                        case 1: // BUSCA PELO NOME INTEIRO
-                            comando.setString(1, "%" + filtro + "%");
-                            break;
+                    case 1: // BUSCA PELO NOME INTEIRO
+                        comando.setString(1, "%" + filtro + "%");
+                        break;
 
-                        case 2: // BUSCA PELO INÍCIO DO EMAIL
-                            comando.setString(1, filtro + "%");
-                            break;
+                    case 2: // BUSCA PELO INÍCIO DO EMAIL
+                        comando.setString(1, filtro + "%");
+                        break;
 
-                        case 3: // BUSCA PELO EMAIL INTEIRO
-                            comando.setString(1, "%" + filtro + "%");
-                            break;
-                    }
+                    case 3: // BUSCA PELO EMAIL INTEIRO
+                        comando.setString(1, "%" + filtro + "%");
+                        break;
                 }
             }
 
