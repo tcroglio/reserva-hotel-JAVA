@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.User;
+import org.w3c.dom.Text;
 
 /**
  * @author tiago
@@ -15,7 +16,6 @@ public class UserController {
 
     public UserController() {
     }
-    //--------------------------------------------------------------------------------------//
 
     //--------------------------------------------------------------------------------------//
     public boolean autenticar(String email, String senha) {
@@ -51,7 +51,6 @@ public class UserController {
     }
 
     //--------------------------------------------------------------------------------------//
-    //--------------------------------------------------------------------------------------//
     public boolean cadastrar(User usuario) {
 
         String sql = "INSERT INTO tbl_usuarios (nome, email, senha, datanasc, ativo)"
@@ -85,7 +84,6 @@ public class UserController {
     }
 
     //--------------------------------------------------------------------------------------//
-    //--------------------------------------------------------------------------------------//
     public List<User> listaUsuarios(int tipoFiltro, String filtro, int orderBy) {
         String sql = "SELECT * FROM tbl_usuarios";
 
@@ -96,7 +94,6 @@ public class UserController {
 
         // BUSCA
         if (!filtro.equals("")) {
-
             if (tipoFiltro == 0 || tipoFiltro == 1) { // BUSCA PELO NOME
                 sql += " WHERE nome LIKE ? ";
 
@@ -104,7 +101,6 @@ public class UserController {
                 sql += " WHERE email LIKE ? ";
 
             }
-
         }
 
         // ORDENA
@@ -188,4 +184,34 @@ public class UserController {
     }
 
     //--------------------------------------------------------------------------------------//
+    public boolean deletarUsuario(int id_usuario) {
+        String sql = "DELETE FROM tbl_usuarios WHERE id_usuario = ?";
+
+        DbConnection gerenciador = new DbConnection();
+        PreparedStatement comando = null;
+
+        try {
+            comando = gerenciador.prepararComando(sql);
+            comando.setInt(1, id_usuario);
+            comando.executeUpdate();
+
+            return true;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+
+        } finally {
+
+            gerenciador.fecharConexao(comando);
+        }
+
+        return false;
+    }
+
+    //--------------------------------------------------------------------------------------//
+    public boolean editarUsuario(User usu) {
+
+        return false;
+    }
+
 }

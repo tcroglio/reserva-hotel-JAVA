@@ -147,7 +147,7 @@ public class FrMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_imCadSairActionPerformed
 
     private void imConsUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imConsUsuarioActionPerformed
-        FrListaUsuarios frList = new FrListaUsuarios();
+        FrListaUser frList = new FrListaUser();
         
         frList.setVisible(true);
     }//GEN-LAST:event_imConsUsuarioActionPerformed
