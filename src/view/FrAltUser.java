@@ -5,12 +5,15 @@
 package view;
 
 import controller.DbConnection;
+import controller.UserController;
 import java.awt.Color;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import model.User;
+import utils.Utils;
 
 /**
  *
@@ -53,13 +56,13 @@ public class FrAltUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         checkAtivo = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        txtSenha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtConfirmarSenha = new javax.swing.JTextField();
         btnEditarSenha = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
+        txtConfirmarSenha = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -116,15 +119,9 @@ public class FrAltUser extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Senha"));
 
-        txtSenha.setEditable(false);
-        txtSenha.setBackground(java.awt.Color.lightGray);
-
         jLabel6.setText("Senha");
 
         jLabel7.setText("Confirmar senha");
-
-        txtConfirmarSenha.setEditable(false);
-        txtConfirmarSenha.setBackground(java.awt.Color.lightGray);
 
         btnEditarSenha.setText("EDITAR");
         btnEditarSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +130,12 @@ public class FrAltUser extends javax.swing.JFrame {
             }
         });
 
+        txtSenha.setBackground(java.awt.Color.lightGray);
+        txtSenha.setText("jPasswordField1");
+
+        txtConfirmarSenha.setBackground(java.awt.Color.lightGray);
+        txtConfirmarSenha.setText("jPasswordField2");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -140,18 +143,16 @@ public class FrAltUser extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditarSenha)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64))
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnEditarSenha))
-                .addContainerGap(22, Short.MAX_VALUE))
+                            .addComponent(txtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,11 +256,11 @@ public class FrAltUser extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        gravar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
@@ -300,14 +301,14 @@ public class FrAltUser extends javax.swing.JFrame {
         try {
             comando = gerenciador.prepararComando(sql); // prepara o comando
             comando.setInt(1, user.getId_usuario());
-
             resultado = comando.executeQuery();
+
             if (resultado.next()) { // Mover o cursor para a primeira linha
 
                 txtCodigo.setText(Integer.toString(resultado.getInt("id_usuario")));
                 txtNome.setText(resultado.getString("nome"));
                 txtEmail.setText(resultado.getString("email"));
-                txtDataNasc.setText(resultado.getString("datanasc"));
+                txtDataNasc.setText(Utils.converterDateToString(resultado.getDate("datanasc")));
                 txtSenha.setText(resultado.getString("senha"));
                 txtConfirmarSenha.setText(resultado.getString("senha"));
                 if (resultado.getBoolean("ativo")) {
@@ -322,6 +323,82 @@ public class FrAltUser extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formWindowOpened
+
+    public boolean verificaCampos() {
+        if (txtNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "O campo nome deve ser preenchido.");
+            return false;
+
+        } else if (!txtNome.getText().matches("^[\\p{L} ]+$")) {
+            JOptionPane.showMessageDialog(null, "O campo nome possui caracteres inválidos.");
+            return false;
+
+        } else if (txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "O campo email deve ser preenchido.");
+            return false;
+
+        } else if (!txtEmail.getText().matches("^[a-z0-9._]+@[a-z0-9._]+.[a-z0-9]+$")) {
+            JOptionPane.showMessageDialog(null, "O campo email deve seguir o formato 'xxxxx@xxxxx.xxxxx'.");
+            return false;
+
+        } else if (txtSenha.getText().length() < 8) {
+            JOptionPane.showMessageDialog(null, "A senha deve conter no mínimo 8 caracteres.");
+            return false;
+
+        } else if (!txtSenha.getText().equals(txtConfirmarSenha.getText())) {
+            JOptionPane.showMessageDialog(null, "As senhas informadas não coincidem");
+            return false;
+
+        } else if (txtDataNasc.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "O campo data de nascimento deve ser preenchido");
+            return false;
+
+        } else if (!txtDataNasc.getText().matches("^[0-9]{2}/[0-9]{2}/[0-9]{4}$")) {
+            JOptionPane.showMessageDialog(null, "O campo data de nascimento possui formato inválido:\nEx: 01/01/2010");
+            return false;
+
+        }
+
+        return true;
+    }
+
+    public void gravar() {
+
+        user.setNome(txtNome.getText());
+        user.setEmail(txtEmail.getText());
+
+        String senha = new String(txtSenha.getPassword());
+        String senhaHash = Utils.calcularSHA1(senha);
+        user.setSenha(senhaHash);
+
+        Date data = Utils.converterStringToDate(txtDataNasc.getText());
+        user.setDataNasc(data);
+
+        user.setAtivo(checkAtivo.isSelected());
+
+        UserController controller = new UserController();
+
+        if (controller.editarUsuario(user)) {
+            JOptionPane.showMessageDialog(null, "Usuário " + user.getNome() + " alterado com sucesso!!");
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Houve um erro ao editar o usuário! Tente novamente.");
+        }
+    }
+
+    public void carregarUsuario() {
+        UserController controller = new UserController();
+        user = controller.buscarPorId(user.getId_usuario());
+
+        String codigo = String.valueOf(user.getId_usuario());
+        txtCodigo.setText(codigo);
+        txtNome.setText(user.getNome());
+        txtEmail.setText(user.getEmail());
+        txtDataNasc.setText(Utils.converterDateToString(user.getDataNasc()));
+        checkAtivo.setSelected(user.isAtivo());
+
+    }
 
     /**
      * @param args the command line arguments
@@ -374,10 +451,10 @@ public class FrAltUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtConfirmarSenha;
+    private javax.swing.JPasswordField txtConfirmarSenha;
     private javax.swing.JTextField txtDataNasc;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

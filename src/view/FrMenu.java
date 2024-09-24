@@ -24,6 +24,7 @@ public class FrMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -34,6 +35,9 @@ public class FrMenu extends javax.swing.JFrame {
         menConsultar = new javax.swing.JMenu();
         imConsUsuario = new javax.swing.JMenuItem();
         menSobre = new javax.swing.JMenu();
+        imSobreSobre = new javax.swing.JMenuItem();
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +108,15 @@ public class FrMenu extends javax.swing.JFrame {
         jMenuBar1.add(menConsultar);
 
         menSobre.setText("Sobre");
+
+        imSobreSobre.setText("Sobre");
+        imSobreSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imSobreSobreActionPerformed(evt);
+            }
+        });
+        menSobre.add(imSobreSobre);
+
         jMenuBar1.add(menSobre);
 
         setJMenuBar(jMenuBar1);
@@ -126,7 +139,7 @@ public class FrMenu extends javax.swing.JFrame {
 
     private void imCadUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imCadUsuarioActionPerformed
         FrCadastrarUser cad = new FrCadastrarUser();
-        
+
         cad.setVisible(true);
     }//GEN-LAST:event_imCadUsuarioActionPerformed
 
@@ -140,7 +153,7 @@ public class FrMenu extends javax.swing.JFrame {
     private void imCadSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imCadSairActionPerformed
 
         int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
-       
+
         if (confirmacao == JOptionPane.YES_OPTION) {
             this.dispose();
         }
@@ -148,9 +161,15 @@ public class FrMenu extends javax.swing.JFrame {
 
     private void imConsUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imConsUsuarioActionPerformed
         FrListaUser frList = new FrListaUser();
-        
+
         frList.setVisible(true);
     }//GEN-LAST:event_imConsUsuarioActionPerformed
+
+    private void imSobreSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imSobreSobreActionPerformed
+        FrSobre frsobre = new FrSobre();
+        frsobre.setVisible(true);
+
+    }//GEN-LAST:event_imSobreSobreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,9 +210,11 @@ public class FrMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem imCadSair;
     private javax.swing.JMenuItem imCadUsuario;
     private javax.swing.JMenuItem imConsUsuario;
+    private javax.swing.JMenuItem imSobreSobre;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menCadastrar;
     private javax.swing.JMenu menConsultar;
