@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.User;
+import utils.Utils;
 
 /**
  * @author tiago
@@ -54,19 +55,22 @@ public class UserController {
     //--------------------------------------------------------------------------------------//
     public boolean cadastrar(User usuario) {
 
-        String sql = "INSERT INTO tbl_usuarios (nome, email, senha, datanasc, ativo)"
-                + " VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_usuarios (nome, email, senha, datanasc, ativo, img)"
+                + " VALUES (?, ?, ?, ?, ?, ?)";
 
         DbConnection gerenciador = new DbConnection();
         PreparedStatement comando = null;
 
         try {
+            byte[] iconBytes = Utils.iconToBytes(usuario.getImagem());
+            
             comando = gerenciador.prepararComando(sql);
             comando.setString(1, usuario.getNome());
             comando.setString(2, usuario.getEmail());
             comando.setString(3, usuario.getSenha());
             comando.setDate(4, new java.sql.Date(usuario.getDataNasc().getTime()));
             comando.setBoolean(5, usuario.isAtivo());
+            comando.setBytes(6, iconBytes);
 
             int linhasAfetadas = comando.executeUpdate();
 
@@ -273,6 +277,5 @@ public class UserController {
         }
 
         return usu;
-
     }
 }

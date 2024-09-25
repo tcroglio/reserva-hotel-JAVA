@@ -9,14 +9,10 @@ import model.User;
 import utils.Utils;
 
 /**
- *
  * @author tiago
  */
 public class FrListaUser extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrListaUsuarios
-     */
     public FrListaUser() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -300,7 +296,7 @@ public class FrListaUser extends javax.swing.JFrame {
 
             frAltUser.setVisible(true);
             frAltUser.setUser(usu); // passando o usuário para a outra tela
-        
+
         } else {
             JOptionPane.showMessageDialog(null, "Para editar um usuário, selecione uma linha.");
 
@@ -349,9 +345,6 @@ public class FrListaUser extends javax.swing.JFrame {
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

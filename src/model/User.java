@@ -1,26 +1,29 @@
 package model;
 
 import java.util.Date;
+import javax.swing.Icon;
 
 /**
  * @author tiago
  */
 public class User {
-   
+
     private int id_usuario;
     private String nome;
     private String email;
     private String senha;
     private Date dataNasc;
     private boolean ativo;
+    private Icon imagem;
 
-    public User() {}
+    public User() {
+    }
 
     @Override
     public String toString() {
         return "User{" + "id_usuario=" + id_usuario + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", dataNasc=" + dataNasc + ", ativo=" + ativo + '}';
     }
-    
+
     public User(int id_usuario, String nome, String email, String senha, Date dataNasc, boolean ativo) {
         this.id_usuario = id_usuario;
         this.nome = nome;
@@ -81,9 +84,17 @@ public class User {
     public String ativoToString() {
         if (isAtivo()) {
             return "Ativo";
-            
+
         } else {
             return "Inativo";
         }
+    }
+
+    public Icon getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(Icon imagem) {
+        this.imagem = imagem;
     }
 }

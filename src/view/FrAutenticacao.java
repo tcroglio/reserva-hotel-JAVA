@@ -6,14 +6,10 @@ import javax.swing.JOptionPane;
 import utils.Utils;
 
 /**
- *
  * @author tiago
  */
 public class FrAutenticacao extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrAutenticacao
-     */
     public FrAutenticacao() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -219,9 +215,6 @@ public class FrAutenticacao extends javax.swing.JFrame {
     }
     
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

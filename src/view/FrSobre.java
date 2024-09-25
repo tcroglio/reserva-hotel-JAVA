@@ -12,9 +12,7 @@ import javax.swing.JOptionPane;
  * @author tiago
  */
 public class FrSobre extends javax.swing.JFrame {
-    /**
-     * Creates new form FrSobre
-     */
+
     public FrSobre() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -158,9 +156,6 @@ public class FrSobre extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

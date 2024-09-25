@@ -7,9 +7,6 @@ import javax.swing.JOptionPane;
  */
 public class FrMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrMenu
-     */
     public FrMenu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -171,9 +168,6 @@ public class FrMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_imSobreSobreActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
